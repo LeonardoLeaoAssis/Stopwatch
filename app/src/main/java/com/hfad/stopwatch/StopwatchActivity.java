@@ -17,6 +17,11 @@ public class StopwatchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (savedInstanceState != null) {
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+        }
+
         runTimer();
         Log.i("log", "onCreate");
     }
@@ -100,4 +105,11 @@ public class StopwatchActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("seconds", seconds);
+        outState.putBoolean("running", running);
+    }
 }
