@@ -5,9 +5,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class StopwatchActivity extends Activity {
+
+    @BindView(R.id.time_view)
+    public TextView timeView;
+
+    @BindView(R.id.start_button)
+    public Button start_button;
+
+    @BindView(R.id.stop_button)
+    public Button stop_button;
+
+    @BindView(R.id.reset_button)
+    public Button reset_button;
 
     private int seconds = 0;
     private boolean running = false;
@@ -17,6 +34,8 @@ public class StopwatchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
 
         if (savedInstanceState != null) {
             seconds = savedInstanceState.getInt("seconds");
@@ -77,21 +96,23 @@ public class StopwatchActivity extends Activity {
         Log.i("log", "onDestroy");
     }
 
+    @OnClick(R.id.start_button)
     public void onClickStart(View view) {
         running = true;
     }
 
+    @OnClick(R.id.stop_button)
     public void onClickStop(View view) {
         running = false;
     }
 
+    @OnClick(R.id.reset_button)
     public void onClickReset(View view) {
         running = false;
         seconds = 0;
     }
 
     private void runTimer() {
-        final TextView timeView = (TextView) findViewById(R.id.time_view);
         final Handler handler = new Handler();
 
         handler.post(new Runnable() {
